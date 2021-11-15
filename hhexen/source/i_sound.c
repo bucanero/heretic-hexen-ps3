@@ -17,7 +17,7 @@
 #include "i_sound.h"
 
 
-#include "spu_soundlib.h"
+#include <soundlib/spu_soundlib.h>
 
 int tsm_ID = -1;
 

@@ -28,8 +28,8 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <assert.h>
-#include <rsx/gcm.h>
-#include <rsx/reality.h>
+#include <rsx/gcm_sys.h>
+#include <rsx/rsx.h>
 #include <sysutil/video.h>
 
 

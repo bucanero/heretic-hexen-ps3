@@ -25,15 +25,15 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#include <psl1ght/lv2.h>
-#include <psl1ght/lv2/spu.h>
+#include <ppu-lv2.h>
 #include <lv2/spu.h>
 
 #include <lv2/process.h>
-#include <psl1ght/lv2/timer.h>
-#include <psl1ght/lv2/thread.h>
+#include <lv2/systime.h>
+#include <lv2/thread.h>
 #include <sysmodule/sysmodule.h>
-#include <sysutil/events.h>
+#include <sysutil/sysutil.h>
+#include <sys/file.h>
 
 #include <io/pad.h>
 
@@ -50,8 +50,8 @@
 #include "st_start.h"
 
 #include "graphics.h"
-#include "spu_soundmodule.bin.h" // load SPU Module
-#include "spu_soundlib.h"
+#include "spu_soundmodule_bin.h" // load SPU Module
+#include <soundlib/spu_soundlib.h>
 
 
 // SPU
@@ -93,8 +93,8 @@ int is_16_9=0;
 
 unsigned temp_pad=0,new_pad=0,old_pad=0;
 
-PadInfo padinfo;
-PadData paddata;
+padInfo padinfo;
+padData paddata;
 int pad_alive=0;
 
 #define BUTTON_LEFT       32768
@@ -131,13 +131,13 @@ unsigned ps3pad_read()
 {
 int n;
 
-PadActParam actparam;
+padActParam actparam;
 
 unsigned butt=0;
 
     pad_alive=0;
 
-    sysCheckCallback();
+    sysUtilCheckCallback();
 
     ioPadGetInfo(&padinfo);
 
@@ -228,12 +228,12 @@ u32 inited;
 
 void My_Quit(void) {
     
-    PadActParam actparam;
+    padActParam actparam;
     actparam.small_motor = 0;
     actparam.large_motor = 0;
 
     if(inited & INITED_CALLBACK)
-        sysUnregisterCallback(EVENT_SLOT0);
+        sysUtilUnregisterCallback(SYSUTIL_EVENT_SLOT0);
     
     if(inited & INITED_SOUNDLIB)
         SND_End();
@@ -243,7 +243,7 @@ void My_Quit(void) {
         s_printf("Destroying SPU... ");
         scr_flip();
         sleep(1);
-        lv2SpuRawDestroy(spu);
+        sysSpuRawDestroy(spu);
         sysSpuImageClose(&spu_image);
     }
 
@@ -254,7 +254,7 @@ void My_Quit(void) {
 static void sys_callback(uint64_t status, uint64_t param, void* userdata) {
 
      switch (status) {
-        case EVENT_REQUEST_EXITAPP:
+        case SYSUTIL_EXIT_GAME:
                 
             My_Quit();
             sysProcessExit(1);
@@ -273,7 +273,7 @@ static char my_wad[2048];
 
 void copyfiles(char *src, char *dst)
 {
-    Lv2FsFile dir;
+    s32 dir;
 
     char name1[1024], name2[1024];
 
@@ -284,7 +284,7 @@ void copyfiles(char *src, char *dst)
     int readed=0;
     int copied=0;
 
-    lv2FsOpenDir(src, &dir);
+    sysLv2FsOpenDir(src, &dir);
 
     cls();
 
@@ -292,11 +292,11 @@ void copyfiles(char *src, char *dst)
 
     while(1) {
 
-        u64 read = sizeof(Lv2FsDirent);
-        Lv2FsDirent entry;
+        u64 read = sizeof(sysFSDirent);
+        sysFSDirent entry;
 
-        if(lv2FsReadDir(dir, &entry, &read)<0 || read <= 0) {
-            lv2FsCloseDir(dir);
+        if(sysLv2FsReadDir(dir, &entry, &read)<0 || read <= 0) {
+            sysLv2FsCloseDir(dir);
             break;
         }
 
@@ -370,7 +370,7 @@ int main(int argc, char **argv)
 
     ioPadInit(7);
 
-    if(sysRegisterCallback(EVENT_SLOT0, sys_callback, NULL)==0) inited |= INITED_CALLBACK;
+    if(sysUtilRegisterCallback(SYSUTIL_EVENT_SLOT0, sys_callback, NULL)==0) inited |= INITED_CALLBACK;
 
     // test args to get HEXEN.WAD
 
@@ -408,11 +408,11 @@ int main(int argc, char **argv)
     }
 
     s_printf("Initializing SPUs...");
-    s_printf("%08x\n", lv2SpuInitialize(6, 5));
+    s_printf("%08x\n", sysSpuInitialize(6, 5));
     scr_flip();
 
     s_printf("Initializing raw SPU... ");
-    s_printf("%08x\n", lv2SpuRawCreate(&spu, NULL));
+    s_printf("%08x\n", sysSpuRawCreate(&spu, NULL));
     scr_flip();
 
     s_printf("Getting ELF information... ");
