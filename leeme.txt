@@ -1,0 +1,126 @@
+HHERETIC/HHEXEN port by Hermes <www.elotrolado.net>
+---------------------------------------------------
+
+
+Instalacion
+-----------
+
+Se han previsto dos métodos de instalación
+
+1) Mediante PKG. En este caso, introduce el contenido de la carpeta "pkg" en el directorio raiz de un dispositivo USB
+y usa "Install Package Files" en la PS3
+
+2) Mediante SELF. En este caso, copia "homebrew" al directorio raiz  de tu dispositivo USB y carga las aplicaciones mediante Open Manager 
+o similar
+
+Heretic requiere el archivo HERETIC.WAD que puede ser copiado en la misma ruta donde esté EBOOT.BIN (/dev_hdd0/game/HERETIC01/USRDIR o 
+/dev_usb/homebrew/Heretic) o en el dispositivo USB creando una carpeta "heretic" y copiando dentro HERETIC.WAD (/dev_usb/heretic/HERETIC.WAD)
+
+El nombre DEBE estar en mayusculas.
+
+Para facilitar el copiado de ficheros, se ha dotado de una utilidad al comenzar el juego: en la pantalla de licencia se pide que pulses CIRCULO 
+si quieres copiar el contenido de dev_usb/heretic a la localización del juego en disco duro (/dev_hdd0/game/HERETIC01/USRDIR)
+
+Tambien puedes usar un programa de FTP para transferir HERETIC.WAD.
+
+En el caso de HEXEN se procede de forma similar, solo que en éste caso, se requiere HEXEN.WAD que debe ser copiado o bien a /dev_usb/hexen
+(para todas las instalaciones) o /dev_usb/homebrew/Hexen (Open Manager) o a /dev_hdd0/game/HEXEN0001/USRDIR (HDD).
+
+De igual forma se dispone de la utilidad en la pantalla de licencia para copiar el contenido de /dev_usb/hexen a /dev_hdd0/game/HEXEN0001/USRDIR 
+pulsando CIRCULO
+
+PANTALLA DE AYUDA / CONTROLES
+-----------------------------
+
+En cualquier momento se puede pulsar START para entrar en la pantalla de ayuda (el juego es pausado en ese momento). La pantalla de ayuda muestra
+los controles del juego y pausa el juego.
+
+
+Con SELECT se entra en el Menu del juego. El resto de los botones se asignan así:
+
+HERETIC
+-------
+
+Stick Izquierdo: Moverse adelante atrás y con desplazamiento lateral
+
+Stick Derecho: Mirar arriba /abajo giro izquierda/derecha
+
+Boton L2: Correr
+
+Boton R2: Disparar
+        
+Boton EQUIS: Cambiar de Arma
+
+Boton CIRCULO: Abrir/Cerrar puertas
+
+Boton CUADRADO: Usar Item
+
+Boton TRIANGULO: Activar / Desactivar mapa
+
+Boton L1/ R1: Seleccionar Item
+
+PAD Izq/DER -> Disminuir / Aumentar Mapa
+
+PAD Arriba/Abajo: Volar (requiere Item)
+
+Retener L2 y pulsar CIRCULO: Dejar de volar
+
+SELECT: Menu del Juego
+
+START: Pantalla de ayuda
+
+HEXEN
+-----
+
+Stick Izquierdo: Moverse adelante atrás y con desplazamiento lateral
+
+Stick Derecho: Mirar arriba /abajo giro izquierda/derecha
+
+Boton L2: Correr
+
+Boton R2: Disparar
+        
+Boton EQUIS: Salto
+
+Boton CIRCULO: Abrir/Cerrar puertas
+
+Boton CUADRADO: Usar Item
+
+Boton TRIANGULO: Activar / Desactivar mapa
+
+Boton L1/ R1: Seleccionar Item
+
+PAD Izq/ Arriba/Der/ Abj: Cambiar de Arma (1, 2, 3, 4)
+
+Retener L2 y PAD Izq/DER -> Disminuir / Aumentar Mapa
+
+Retener L2 y PAD Arriba/Abajo: Volar (requiere Item)
+
+Retener L2 y pulsar CIRCULO: Dejar de volar
+
+SELECT: Menu del Juego
+
+START: Pantalla de ayuda
+
+CHEATS
+------
+
+Los dos juegos permiten activar Cheats de la siguiente forma:
+
+
+Pulsa START y en la patalla de ayuda, pulsa L1 cinco veces hasta que la pantalla cambie de color
+
+
+Reten R1 y pulsa pad Arriba: Todas las Armas (All Weapons)
+
+Reten R1 y pulsa pad Derecha: Modo Dios (god mode on/off)
+
+Reten R1 y pulsa pad Abajo: Recuperar Salud (full Health)
+
+Reten R1 y pulsa pad Izquierda: Todas las llaves (all keys)
+
+Reten R1 y pulsa Triangulo: Todos los items (all items: you got it)
+
+
+
+
