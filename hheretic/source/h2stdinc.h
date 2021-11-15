@@ -100,6 +100,14 @@ typedef enum {
 #endif
 #endif
 
+#ifdef false
+#undef false
+#endif
+
+#ifdef true
+#undef true
+#endif
+
 //typedef int BOOLEAN;
 typedef enum {
 	false = 0,

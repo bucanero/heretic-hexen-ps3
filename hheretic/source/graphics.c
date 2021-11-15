@@ -31,7 +31,7 @@ u32 *virtual_scr= NULL;
 
 gcmContextData *context; // Context to keep track of the RSX buffer.
 
-VideoResolution res; // Screen Resolution
+videoResolution res; // Screen Resolution
 
 int currentBuffer = 0;
 s32 *buffer[2]; // The buffer we will be drawing into.
@@ -122,7 +122,7 @@ void waitFlip() { // Block the PPU thread untill the previous flip operation has
 
 void flip(s32 buffer) {
 	assert(gcmSetFlip(context, buffer) == 0);
-	realityFlushBuffer(context);
+	rsxFlushBuffer(context);
 	gcmSetWaitFlip(context); // Prevent the RSX from continuing until the flip has finished.
 }
 
@@ -135,10 +135,10 @@ void init_screen() {
 	assert(host_addr != NULL);
 
 	// Initilise Reality, which sets up the command buffer and shared IO memory
-	context = realityInit(0x10000, 1024*1024, host_addr); 
+	rsxInit(&context, 0x10000, 1024*1024, host_addr); 
 	assert(context != NULL);
 
-	VideoState state;
+	videoState state;
 	assert(videoGetState(0, 0, &state) == 0); // Get the state of the display
 	assert(state.state == 0); // Make sure display is enabled
 
@@ -146,8 +146,8 @@ void init_screen() {
 	assert(videoGetResolution(state.displayMode.resolution, &res) == 0);
 	
 	// Configure the buffer format to xRGB
-	VideoConfiguration vconfig;
-	memset(&vconfig, 0, sizeof(VideoConfiguration));
+	videoConfiguration vconfig;
+	memset(&vconfig, 0, sizeof(videoConfiguration));
 	vconfig.resolution = state.displayMode.resolution;
 	vconfig.format = VIDEO_BUFFER_FORMAT_XRGB;
 	vconfig.pitch = res.width * 4;
@@ -162,13 +162,13 @@ void init_screen() {
 	gcmSetFlipMode(GCM_FLIP_VSYNC); // Wait for VSYNC to flip
 
 	// Allocate two buffers for the RSX to draw to the screen (double buffering)
-	buffer[0] = rsxMemAlign(16, buffer_size);
-	buffer[1] = rsxMemAlign(16, buffer_size);
+	buffer[0] = rsxMemalign(16, buffer_size);
+	buffer[1] = rsxMemalign(16, buffer_size);
 	assert(buffer[0] != NULL && buffer[1] != NULL);
 
 	u32 offset[2];
-	assert(realityAddressToOffset(buffer[0], &offset[0]) == 0);
-	assert(realityAddressToOffset(buffer[1], &offset[1]) == 0);
+	assert(rsxAddressToOffset(buffer[0], &offset[0]) == 0);
+	assert(rsxAddressToOffset(buffer[1], &offset[1]) == 0);
 	// Setup the display buffers
 	assert(gcmSetDisplayBuffer(0, offset[0], res.width * 4, res.width, res.height) == 0);
 	assert(gcmSetDisplayBuffer(1, offset[1], res.width * 4, res.width, res.height) == 0);
