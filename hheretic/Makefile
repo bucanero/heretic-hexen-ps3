@@ -10,7 +10,7 @@ endif
 #---------------------------------------------------------------------------------
 #  TITLE, APPID, CONTENTID, ICON0, SFOXML before ppu_rules.
 #---------------------------------------------------------------------------------
-ICON0		:=	$(CURDIR)/ICON0.PNG
+ICON0		:=	$(CURDIR)/pkgfiles/ICON0.PNG
 #SFOXML		:=	$(CURDIR)/sfo.xml
 
 include $(PSL1GHT)/ppu_rules
